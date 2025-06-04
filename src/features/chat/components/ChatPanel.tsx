@@ -1,25 +1,43 @@
-import { motion } from "framer-motion";
+import { generateResponse } from "../../../services/geminiService";
+import { useMapLayer } from "../../map/hooks/useMapLayer";
 import { useChat } from "../hooks/useChat";
-import MessageItem from "./MessageItem";
+import ChatConversation from "./ChatConversation";
+import ChatInput from "./ChatInput";
 
 export default function ChatPanel() {
-  const { messages } = useChat();
+  const { addMessage, isLoading, setIsLoading } = useChat();
+  const { setGeoJsonData } = useMapLayer();
+
+  async function handleSend(message: string) {
+    if (!message.trim()) return;
+
+    addMessage(message, "user");
+
+    try {
+      setIsLoading(true);
+
+      const response = await generateResponse(message);
+
+      setIsLoading(false);
+
+      addMessage(response.text, "assistant", response.geoJson);
+      if (response.geoJson) {
+        setGeoJsonData(response.geoJson);
+      }
+    } catch {
+      setIsLoading(false);
+
+      addMessage(
+        "Sorry, I encountered an error processing your request.",
+        "assistant"
+      );
+    }
+  }
 
   return (
-    <motion.div
-      initial={{ x: "100%" }}
-      animate={{ x: messages.length > 0 ? 0 : "100%" }}
-      transition={{ type: "spring", damping: 20 }}
-      className="fixed right-0 top-0 bottom-0 w-96 bg-white shadow-lg border-l border-gray-200 overflow-hidden"
-    >
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold">Exploration</h2>
-      </div>
-      <div className="overflow-y-auto h-[calc(100vh-64px)] p-4 space-y-4">
-        {messages.map((message) => (
-          <MessageItem key={message.id} message={message} />
-        ))}
-      </div>
-    </motion.div>
+    <>
+      <ChatInput onSend={handleSend} isLoading={isLoading} />
+      <ChatConversation />
+    </>
   );
 }

@@ -1,46 +1,27 @@
 import React, { useState } from "react";
 import { Send } from "lucide-react";
-import { useChat } from "../hooks/useChat";
-import { useMapLayer } from "../../map/hooks/useMapLayer";
-import { generateResponse } from "../../../services/geminiService";
 
-export default function ChatInput() {
+type ChatInputProps = {
+  onSend?: (message: string) => Promise<void>;
+  isLoading?: boolean;
+};
+
+export default function ChatInput({
+  onSend,
+  isLoading = false,
+}: ChatInputProps) {
   const [input, setInput] = useState("");
-  const { addMessage, isLoading, setIsLoading } = useChat();
-  const { setGeoJsonData } = useMapLayer();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
 
-    const userMessage = input;
-    setInput("");
-    addMessage(userMessage, "user");
-
-    try {
-      setIsLoading(true);
-
-      const response = await generateResponse(userMessage);
-
-      setIsLoading(false);
-
-      addMessage(response.text, "assistant", response.geoJson);
-      if (response.geoJson) {
-        setGeoJsonData(response.geoJson);
-      }
-    } catch {
-      setIsLoading(false);
-
-      addMessage(
-        "Sorry, I encountered an error processing your request.",
-        "assistant"
-      );
-    }
+    await onSend?.(input);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
+      aria-label="Chat input"
       className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-2xl"
     >
       <div
