@@ -1,26 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import ChatInput from "../../../../src/features/chat/components/ChatInput";
 import { describe, expect, it, vi } from "vitest";
-import { ChatProvider } from "../../../../src/features/chat/contexts/ChatContext";
-import { MapLayerProvider } from "../../../../src/features/map/contexts/MapLayerContext";
-import ChatPanel from "../../../../src/features/chat/components/ChatPanel";
-import { generateResponse } from "../../../../src/services/geminiService";
 import userEvent from "@testing-library/user-event";
-
-vi.mock("../../../../src/services/geminiService", () => ({
-  generateResponse: vi.fn().mockImplementation((message) => {
-    return "Mocked response for: " + message;
-  }),
-}));
+import { store } from "../../../../src/redux/store";
+import { Provider } from "react-redux";
 
 describe("ChatInput", () => {
   it("renders an input field", () => {
     render(
-      <MapLayerProvider>
-        <ChatProvider>
-          <ChatInput />
-        </ChatProvider>
-      </MapLayerProvider>
+      <Provider store={store}>
+        <ChatInput />
+      </Provider>
     );
     expect(
       screen.getByPlaceholderText("Ask about the Philippine geography...")
@@ -28,12 +18,12 @@ describe("ChatInput", () => {
   });
 
   it("should NOT call generateResponse if input is empty", () => {
+    const mockOnSend = vi.fn();
+
     render(
-      <MapLayerProvider>
-        <ChatProvider>
-          <ChatPanel />
-        </ChatProvider>
-      </MapLayerProvider>
+      <Provider store={store}>
+        <ChatInput onSend={mockOnSend} />
+      </Provider>
     );
     const input = screen.getByPlaceholderText(
       "Ask about the Philippine geography..."
@@ -43,16 +33,16 @@ describe("ChatInput", () => {
     input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
 
     // Verify generateResponse was not called
-    expect(generateResponse).not.toHaveBeenCalled();
+    expect(mockOnSend).not.toHaveBeenCalled();
   });
 
   it("should call generateResponse if input contains message", async () => {
+    const mockOnSend = vi.fn();
+
     render(
-      <MapLayerProvider>
-        <ChatProvider>
-          <ChatPanel />
-        </ChatProvider>
-      </MapLayerProvider>
+      <Provider store={store}>
+        <ChatInput onSend={mockOnSend} />
+      </Provider>
     );
     const input = screen.getByPlaceholderText(
       "Ask about the Philippine geography..."
@@ -63,6 +53,7 @@ describe("ChatInput", () => {
     await user.type(input, message);
     await user.keyboard("{Enter}");
 
-    expect(generateResponse).toHaveBeenCalledWith(message);
+    expect(mockOnSend).toHaveBeenCalledWith(message);
+    expect(mockOnSend).toHaveBeenCalledTimes(1);
   });
 });
