@@ -1,5 +1,5 @@
 import { User, Bot } from "lucide-react";
-import type { Message } from "../../../types";
+import type { Message } from "../../../redux/slices/chatSlice";
 
 interface MessageItemProps {
   message: Message;

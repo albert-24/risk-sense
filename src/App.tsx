@@ -3,23 +3,14 @@
 // import viteLogo from '/vite.svg'
 
 import ChatPanel from "./features/chat/components/ChatPanel";
-import { ChatProvider } from "./features/chat/contexts/ChatContext";
 import MapView from "./features/map/components/MapView";
-import { MapLayerProvider } from "./features/map/contexts/MapLayerContext";
-import { MapProvider } from "react-map-gl/mapbox-legacy";
 
 function App() {
   return (
-    <MapLayerProvider>
-      <div className="relative overflow-clip">
-        <MapProvider>
-          <MapView />
-        </MapProvider>
-        <ChatProvider>
-          <ChatPanel />
-        </ChatProvider>
-      </div>
-    </MapLayerProvider>
+    <div className="relative overflow-clip">
+      <MapView />
+      <ChatPanel />
+    </div>
   );
 }
 

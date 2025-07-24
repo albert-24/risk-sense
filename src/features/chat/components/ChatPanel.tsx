@@ -1,42 +1,25 @@
-import { generateResponse } from "../../../services/geminiService";
-import { useMapLayer } from "../../map/hooks/useMapLayer";
-import { useChat } from "../hooks/useChat";
+// import { useChat } from "../hooks/useChat";
 import ChatConversation from "./ChatConversation";
 import ChatInput from "./ChatInput";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { sendToChatbot } from "../../../redux/slices/chatSlice";
+import { fetchChatbotResponse } from "../../../redux/thunks/chatThunks";
 
 export default function ChatPanel() {
-  const { addMessage, isLoading, setIsLoading } = useChat();
-  const { setGeoJsonData } = useMapLayer();
+  // const { addMessage, isLoading, setIsLoading } = useChat();
+  const dispatch = useAppDispatch();
+  const sendingStatus = useAppSelector((state) => state.chat.sendingStatus);
 
   async function handleSend(message: string) {
     if (!message.trim()) return;
 
-    addMessage(message, "user");
-
-    try {
-      setIsLoading(true);
-
-      const response = await generateResponse(message);
-
-      setIsLoading(false);
-
-      addMessage(response.text, "assistant", response.geoJson);
-      if (response.geoJson) {
-        setGeoJsonData(response.geoJson);
-      }
-    } catch {
-      setIsLoading(false);
-
-      addMessage(
-        "Sorry, I encountered an error processing your request.",
-        "assistant"
-      );
-    }
+    dispatch(sendToChatbot(message));
+    dispatch(fetchChatbotResponse(message));
   }
 
   return (
     <>
-      <ChatInput onSend={handleSend} isLoading={isLoading} />
+      <ChatInput onSend={handleSend} isLoading={sendingStatus == "sending"} />
       <ChatConversation />
     </>
   );

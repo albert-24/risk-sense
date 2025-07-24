@@ -21,6 +21,8 @@ Then, if geographic data is relevant, include the GeoJSON data in a code block l
     }
   ]
 }
+
+Do not include any comments inside the GeoJson.
 \`\`\`
 `;
 
