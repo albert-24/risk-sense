@@ -22,7 +22,7 @@ export default function ChatPanel() {
       <div className="grow">
         <ChatConversation />
       </div>
-      <div className="w-full py-4">
+      <div className="w-full grow-0 py-4">
         <ChatInput onSend={handleSend} isLoading={sendingStatus == "sending"} />
       </div>
     </>

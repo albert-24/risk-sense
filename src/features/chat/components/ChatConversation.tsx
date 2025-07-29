@@ -20,7 +20,7 @@ export default function ChatConversation() {
       {/* <div className="p-4 border-b border-gray-200">
         <h2 className="text-lg font-semibold">Exploration</h2>
       </div> */}
-      <div className="overflow-y-auto p-4 space-y-4">
+      <div className="overflow-y-auto p-4 space-y-4 max-md:max-h-96 h-[calc(100vh-7.5rem)]">
         {messages.map((message) => (
           <MessageItem key={message.id} message={message} />
         ))}

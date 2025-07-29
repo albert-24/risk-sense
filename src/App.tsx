@@ -8,7 +8,7 @@ import MapView from "./features/map/components/MapView";
 
 function App() {
   return (
-    <div className="absolute inset-0">
+    <div className="relative">
       <div className="fixed flex max-md:flex-col-reverse flex-row max-md:h-80 max-md:w-full md:left-4 bottom-4 md:top-4 rounded-lg z-50">
         <div className="flex flex-col grow max-md:w-full max-lg:w-80 w-96 bg-white shadow-lg">
           <ChatPanel />

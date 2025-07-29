@@ -1,9 +1,12 @@
 import Map, { Layer, Popup, Source } from "react-map-gl/mapbox";
+import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useState } from "react";
-import type { Feature } from "geojson";
-import type { MapMouseEvent } from "react-map-gl/mapbox";
+import { useEffect, useRef, useState } from "react";
+import type { Feature, FeatureCollection } from "geojson";
+import type { MapMouseEvent, MapRef } from "react-map-gl/mapbox";
 import { useAppSelector } from "../../../redux/hooks";
+
+import type { GeoJSON, GeoJsonProperties, Geometry, Position } from "geojson";
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 export default function MapView() {
@@ -13,8 +16,8 @@ export default function MapView() {
 
   const [viewport, setViewport] = useState({
     latitude: 13.5,
-    longitude: 122,
-    zoom: 4.5,
+    longitude: 118,
+    zoom: 5,
   });
 
   const [hoverInfo, setHoverInfo] = useState<{
@@ -44,9 +47,50 @@ export default function MapView() {
     setHoverInfo(null);
   };
 
+  const mapRef = useRef<MapRef | null>(null);
+
+  // Zoom to newly added layer
+  useEffect(() => {
+    if (!mapRef.current || geoJsonDataSources.length === 0) return;
+
+    // Find the most recently added layer
+    const latestLayer = geoJsonDataSources[geoJsonDataSources.length - 1];
+    if (!latestLayer?.sourceData) return;
+
+    // Calculate bounds from GeoJSON
+    const geoJsonFeatures = latestLayer.sourceData as FeatureCollection;
+
+    const coordinates: number[][] = [];
+    geoJsonFeatures.features?.forEach((feature: Feature) => {
+      if (feature.geometry.type === "Point") {
+        coordinates.push(feature.geometry.coordinates);
+      } else if (feature.geometry.type === "Polygon") {
+        feature.geometry.coordinates.forEach((ring: number[][]) => {
+          ring.forEach((coord) => coordinates.push(coord));
+        });
+      } else if (feature.geometry.type === "LineString") {
+        feature.geometry.coordinates.forEach((coord: number[]) =>
+          coordinates.push(coord)
+        );
+      }
+    });
+
+    if (coordinates.length > 0) {
+      const bounds = coordinates.reduce(
+        (b, coord) => b.extend(coord as [number, number]),
+        new mapboxgl.LngLatBounds(
+          coordinates[0] as [number, number],
+          coordinates[0] as [number, number]
+        )
+      );
+      mapRef.current.fitBounds(bounds, { padding: 96, duration: 800 });
+    }
+  }, [geoJsonDataSources.length]); // Only run when a layer is added
+
   return (
     <Map
       {...viewport}
+      ref={mapRef}
       mapboxAccessToken={MAPBOX_TOKEN}
       onMove={(evt) => setViewport(evt.viewState)}
       mapStyle="mapbox://styles/mapbox/light-v11"
