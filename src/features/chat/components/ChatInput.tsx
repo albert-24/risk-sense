@@ -22,7 +22,6 @@ export default function ChatInput({
     <form
       onSubmit={handleSubmit}
       aria-label="Chat input"
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-2xl"
     >
       <div
         className={`mx-4 flex items-center gap-2 bg-white rounded-lg shadow-lg border border-gray-200  ${
