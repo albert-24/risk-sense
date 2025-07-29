@@ -9,26 +9,28 @@ First, provide a natural language response.
 Then, if geographic data is relevant, include the GeoJSON data in a code block like this:
 \`\`\`json
 {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [[...]]
-      },
-      "properties": {}
-    }
-  ]
+  "layerName": "Descriptive Layer Name",
+  "geojson": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[...]]
+        },
+        "properties": {}
+      }
+    ]
+  }
 }
-
 Do not include any comments inside the GeoJson.
 \`\`\`
 `;
 
 export async function generateResponse(
   prompt: string
-): Promise<{ text: string; geoJson: GeoJSON.FeatureCollection | undefined }> {
+): Promise<{ text: string; geoJson: GeoJSON.FeatureCollection | undefined; layerName: string | undefined }> {
   try {
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash-preview-05-20",
@@ -40,24 +42,25 @@ export async function generateResponse(
     const response = await result.response;
     const text = response.text();
 
-    // Extract GeoJSON from the response if present
+    // Extract GeoJSON and layerName from the response if present
     const geoJsonMatch = text.match(/```json\n([\s\S]*?)\n```/);
-    let geoJson = null;
+    let geoJson: GeoJSON.FeatureCollection | undefined = undefined;
+    let layerName: string | undefined = undefined;
 
     if (geoJsonMatch) {
       try {
-        geoJson = JSON.parse(geoJsonMatch[1]);
+        const parsed = JSON.parse(geoJsonMatch[1]);
+        geoJson = parsed.geojson;
+        layerName = parsed.layerName;
       } catch (e) {
         console.error("Failed to parse GeoJSON:", e);
       }
     }
 
-    console.log(text);
-    console.log(geoJson);
-
     return {
       text: text.replace(/```json\n[\s\S]*?\n```/g, "").trim(),
       geoJson,
+      layerName,
     };
   } catch (error) {
     console.error("Error generating response:", error);

@@ -3,7 +3,7 @@
 // import viteLogo from '/vite.svg'
 
 import ChatPanel from "./features/chat/components/ChatPanel";
-import MapLayerButton from "./features/map/components/MapLayerButton";
+import { MapLayerListPopover } from "./features/map/components/MapLayerListPopover";
 import MapView from "./features/map/components/MapView";
 
 function App() {
@@ -14,7 +14,11 @@ function App() {
           <ChatPanel />
         </div>
         <div className="max-md:py-4 px-4">
-          <MapLayerButton active />
+          <MapLayerListPopover
+          // onToggleLayer={function (id: string): void {
+          //   throw new Error("Function not implemented.");
+          // }}
+          />
         </div>
       </div>
       <MapView />

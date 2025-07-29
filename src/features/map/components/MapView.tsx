@@ -99,76 +99,78 @@ export default function MapView() {
       )}
 
       <>
-        {geoJsonDataSources.map(
-          (dataSource) =>
-            dataSource && (
-              <Source
-                key={dataSource.id}
-                type="geojson"
-                data={dataSource.sourceData}
-              >
-                {/* Polygon and MultiPolygon */}
-                <Layer
-                  id={`polygon-fill-${dataSource.id}`}
-                  type="fill"
-                  paint={{
-                    "fill-color": "#3B82F6",
-                    "fill-opacity": 0.5,
-                  }}
-                  filter={[
-                    "any",
-                    ["==", ["geometry-type"], "Polygon"],
-                    ["==", ["geometry-type"], "MultiPolygon"],
-                  ]}
-                />
-                <Layer
-                  id={`polygon-outline-${dataSource.id}`}
-                  type="line"
-                  paint={{
-                    "line-color": "#2563EB",
-                    "line-width": 2,
-                  }}
-                  filter={[
-                    "any",
-                    ["==", ["geometry-type"], "Polygon"],
-                    ["==", ["geometry-type"], "MultiPolygon"],
-                  ]}
-                />
+        {geoJsonDataSources
+          .filter((source) => source.visibleToMap)
+          .map(
+            (dataSource) =>
+              dataSource && (
+                <Source
+                  key={dataSource.id}
+                  type="geojson"
+                  data={dataSource.sourceData}
+                >
+                  {/* Polygon and MultiPolygon */}
+                  <Layer
+                    id={`polygon-fill-${dataSource.id}`}
+                    type="fill"
+                    paint={{
+                      "fill-color": "#3B82F6",
+                      "fill-opacity": 0.5,
+                    }}
+                    filter={[
+                      "any",
+                      ["==", ["geometry-type"], "Polygon"],
+                      ["==", ["geometry-type"], "MultiPolygon"],
+                    ]}
+                  />
+                  <Layer
+                    id={`polygon-outline-${dataSource.id}`}
+                    type="line"
+                    paint={{
+                      "line-color": "#2563EB",
+                      "line-width": 2,
+                    }}
+                    filter={[
+                      "any",
+                      ["==", ["geometry-type"], "Polygon"],
+                      ["==", ["geometry-type"], "MultiPolygon"],
+                    ]}
+                  />
 
-                {/* LineString and MultiLineString */}
-                <Layer
-                  id={`line-${dataSource.id}`}
-                  type="line"
-                  paint={{
-                    "line-color": "#DC2626",
-                    "line-width": 3,
-                  }}
-                  filter={[
-                    "any",
-                    ["==", ["geometry-type"], "LineString"],
-                    ["==", ["geometry-type"], "MultiLineString"],
-                  ]}
-                />
+                  {/* LineString and MultiLineString */}
+                  <Layer
+                    id={`line-${dataSource.id}`}
+                    type="line"
+                    paint={{
+                      "line-color": "#DC2626",
+                      "line-width": 3,
+                    }}
+                    filter={[
+                      "any",
+                      ["==", ["geometry-type"], "LineString"],
+                      ["==", ["geometry-type"], "MultiLineString"],
+                    ]}
+                  />
 
-                {/* Point and MultiPoint */}
-                <Layer
-                  id={`point-${dataSource.id}`}
-                  type="circle"
-                  paint={{
-                    "circle-radius": 6,
-                    "circle-color": "#059669",
-                    "circle-stroke-width": 2,
-                    "circle-stroke-color": "#ffffff",
-                  }}
-                  filter={[
-                    "any",
-                    ["==", ["geometry-type"], "Point"],
-                    ["==", ["geometry-type"], "MultiPoint"],
-                  ]}
-                />
-              </Source>
-            )
-        )}
+                  {/* Point and MultiPoint */}
+                  <Layer
+                    id={`point-${dataSource.id}`}
+                    type="circle"
+                    paint={{
+                      "circle-radius": 6,
+                      "circle-color": "#059669",
+                      "circle-stroke-width": 2,
+                      "circle-stroke-color": "#ffffff",
+                    }}
+                    filter={[
+                      "any",
+                      ["==", ["geometry-type"], "Point"],
+                      ["==", ["geometry-type"], "MultiPoint"],
+                    ]}
+                  />
+                </Source>
+              )
+          )}
       </>
     </Map>
   );

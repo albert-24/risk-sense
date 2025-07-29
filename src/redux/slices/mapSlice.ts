@@ -2,9 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchChatbotResponse } from "../thunks/chatThunks";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 
-interface GeoJsonDataSource {
+export interface GeoJsonDataSource {
   id: string;
+  layerName: string;
   sourceData: string | GeoJSON<Geometry, GeoJsonProperties> | undefined;
+  visibleToMap: boolean;
 }
 
 interface MapState {
@@ -18,15 +20,27 @@ const initialState: MapState = {
 const mapSlice = createSlice({
   name: "map",
   initialState,
-  reducers: {},
+  reducers: {
+    toggleLayerVisibility: (state, action) => {
+      const layer = state.geoJsonDataSources.find(
+        (source) => source.id === action.payload.id
+      );
+      if (layer) {
+        layer.visibleToMap = !layer.visibleToMap;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchChatbotResponse.fulfilled, (state, action) => {
       if (action.payload.geoJson) {
+        const sourceId = crypto.randomUUID();
         state.geoJsonDataSources = [
           ...state.geoJsonDataSources,
           {
-            id: crypto.randomUUID(),
+            id: sourceId,
+            layerName: action.payload.layerName ?? `layer-${sourceId}`,
             sourceData: action.payload.geoJson,
+            visibleToMap: true,
           },
         ];
       }
