@@ -4,15 +4,9 @@ import { useState } from "react";
 import type { Feature } from "geojson";
 import type { MapMouseEvent } from "react-map-gl/mapbox";
 import { useAppSelector } from "../../../redux/hooks";
-// import { useMapLayer } from "../hooks/useMapLayer";
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 export default function MapView() {
-  // const { map } = useMap();
-
-  // const { geoJsonData } = useMapLayer();
-
-  // const dispatch = useAppDispatch();
   const geoJsonDataSources = useAppSelector(
     (state) => state.map.geoJsonDataSources
   );
