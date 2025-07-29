@@ -19,16 +19,11 @@ export default function ChatPanel() {
 
   return (
     <>
-      <div className="fixed flex flex-col max-md:w-full max-lg:w-80 w-96 max-md:h-80 justify-between md:left-4 bottom-4 md:top-4 rounded-lg z-50 bg-white shadow-lg">
-        <div className="grow">
-          <ChatConversation />
-        </div>
-        <div className="w-full py-4 max-w-2xl">
-          <ChatInput
-            onSend={handleSend}
-            isLoading={sendingStatus == "sending"}
-          />
-        </div>
+      <div className="grow">
+        <ChatConversation />
+      </div>
+      <div className="w-full py-4">
+        <ChatInput onSend={handleSend} isLoading={sendingStatus == "sending"} />
       </div>
     </>
   );
