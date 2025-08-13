@@ -6,8 +6,6 @@ import type { Feature, FeatureCollection } from "geojson";
 import type { MapMouseEvent, MapRef } from "react-map-gl/mapbox";
 import { useAppSelector } from "../../../redux/hooks";
 
-import type { GeoJSON, GeoJsonProperties, Geometry, Position } from "geojson";
-
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 export default function MapView() {
   const geoJsonDataSources = useAppSelector(
@@ -28,6 +26,7 @@ export default function MapView() {
 
   const onMouseEnter = (event: MapMouseEvent) => {
     const feature = event.features?.[0] as Feature;
+
     if (feature) {
       // Get coordinates based on geometry type
       const coordinates =
@@ -85,7 +84,16 @@ export default function MapView() {
       );
       mapRef.current.fitBounds(bounds, { padding: 96, duration: 800 });
     }
-  }, [geoJsonDataSources.length]); // Only run when a layer is added
+  }, [geoJsonDataSources.length]);
+
+  const interactiveLayerIds = geoJsonDataSources
+    .filter((source) => source.visibleToMap)
+    .flatMap((source) => [
+      `polygon-fill-${source.id}`,
+      `polygon-outline-${source.id}`,
+      `line-${source.id}`,
+      `point-${source.id}`,
+    ]);
 
   return (
     <Map
@@ -94,7 +102,7 @@ export default function MapView() {
       mapboxAccessToken={MAPBOX_TOKEN}
       onMove={(evt) => setViewport(evt.viewState)}
       mapStyle="mapbox://styles/mapbox/light-v11"
-      interactiveLayerIds={["point", "polygon-fill", "line"]}
+      interactiveLayerIds={interactiveLayerIds}
       style={{ width: "100vw", height: "100vh" }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
