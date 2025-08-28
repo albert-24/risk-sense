@@ -7,6 +7,8 @@ import type { MapMouseEvent, MapRef } from "react-map-gl/mapbox";
 import { useAppSelector } from "../../../redux/hooks";
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
+const MAPBOX_STYLE_URL = import.meta.env.VITE_MAPBOX_STYLE_URL;
+
 export default function MapView() {
   const geoJsonDataSources = useAppSelector(
     (state) => state.map.geoJsonDataSources
@@ -101,7 +103,7 @@ export default function MapView() {
       ref={mapRef}
       mapboxAccessToken={MAPBOX_TOKEN}
       onMove={(evt) => setViewport(evt.viewState)}
-      mapStyle="mapbox://styles/mapbox/light-v11"
+      mapStyle={MAPBOX_STYLE_URL}
       interactiveLayerIds={interactiveLayerIds}
       style={{ width: "100vw", height: "100vh" }}
       onMouseEnter={onMouseEnter}
