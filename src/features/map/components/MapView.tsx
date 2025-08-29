@@ -108,6 +108,7 @@ export default function MapView() {
       style={{ width: "100vw", height: "100vh" }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      logoPosition="bottom-right"
     >
       {/* Raster Layer Example */}
       {/* <Source
