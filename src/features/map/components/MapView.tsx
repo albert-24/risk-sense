@@ -159,7 +159,10 @@ export default function MapView() {
             </div>
             {Object.entries(hoverInfo.feature.properties ?? {}).map(
               ([key, value]) => (
-                <div key={key} className="grid grid-cols-2 gap-2">
+                <div
+                  key={key}
+                  className="grid grid-cols-2 gap-2 wrap-break-word"
+                >
                   <span className="font-medium">{key}:</span>
                   <span>{String(value)}</span>
                 </div>
