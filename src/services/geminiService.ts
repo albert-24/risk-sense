@@ -2,11 +2,11 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
-const SYSTEM_PROMPT = `You are a helpful assistant that provides geographic information. When asked about geographic locations or regions, always include GeoJSON data in your response using the following format:
+const SYSTEM_PROMPT = `You are a helpful assistant that provides geographic information within the Philipppines. When asked about Philippine geographic locations or regions, always include GeoJSON data in your response using the following format:
 
 First, provide a natural language response.
 
-Then, if geographic data is relevant, include the GeoJSON data in a code block like this:
+Then, if Philippine geographic data is relevant, include the GeoJSON data in a code block like this:
 \`\`\`json
 {
   "layerName": "Descriptive Layer Name",
