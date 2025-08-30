@@ -32,14 +32,16 @@ const mapSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChatbotResponse.fulfilled, (state, action) => {
-      if (action.payload.geoJson) {
+      const {aiResponse} = action.payload;
+
+      if (aiResponse.geoJson) {
         const sourceId = crypto.randomUUID();
         state.geoJsonDataSources = [
           ...state.geoJsonDataSources,
           {
             id: sourceId,
-            layerName: action.payload.layerName ?? `layer-${sourceId}`,
-            sourceData: action.payload.geoJson,
+            layerName: aiResponse.layerName ?? `layer-${sourceId}`,
+            sourceData: aiResponse.geoJson,
             visibleToMap: true,
           },
         ];

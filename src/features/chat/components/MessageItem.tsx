@@ -1,7 +1,7 @@
 import { User, Bot } from "lucide-react";
 import type { Message } from "../../../redux/slices/chatSlice";
 import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 interface MessageItemProps {
   message: Message;
@@ -19,14 +19,12 @@ export default function MessageItem({ message }: MessageItemProps) {
       ) : (
         <Bot className="w-6 h-6 text-green-600" />
       )}
-      <div className="flex-1">
-        <p className="text-sm text-gray-900">
-          {message.role === "user" ? (
-            message.content
-          ) : (
-            <Markdown remarkPlugins={[remarkGfm]}>{message.content}</Markdown>
-          )}
-        </p>
+      <div className="flex-1 text-sm text-gray-900">
+        {message.role === "user" ? (
+          <p>{message.content}</p>
+        ) : (
+          <Markdown rehypePlugins={[rehypeRaw]}>{message.content}</Markdown>
+        )}
       </div>
     </div>
   );
