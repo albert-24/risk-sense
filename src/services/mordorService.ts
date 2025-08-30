@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const mordorAxios = axios.create({
-  baseURL: 'http://172.16.0.237:8004',
+  baseURL: 'http://172.16.0.237:8282/api',
   timeout: 10000,
 //   headers: {'X-Custom-Header': 'foobar'}
 });
@@ -21,9 +21,9 @@ export async function classifyChat(
   }: { query: String, page: String }
 ): Promise<ChatClassifierResponse> {
   try {
-    const response = await mordorAxios.post<ChatClassifierResponse>('/classify', {
+    const response = await mordorAxios.post<ChatClassifierResponse>('/platform/chat-bot/', {
         query: query,
-        page: page
+        request: page
     });
     console.log("Mordor response:", response.data);
     return response.data;
