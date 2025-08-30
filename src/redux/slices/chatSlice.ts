@@ -12,12 +12,12 @@ export interface Message {
 
 interface ChatState {
   messages: Message[];
-  sendingStatus: "idle" | "sending" | "sent" | "error";
+  receivingStatus: "idle" | "pending" | "received" | "error";
 }
 
 const initialState: ChatState = {
   messages: [],
-  sendingStatus: "idle",
+  receivingStatus: "idle",
 };
 
 const chatSlice = createSlice({
@@ -37,7 +37,7 @@ const chatSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChatbotResponse.pending, (state) => {
-      state.sendingStatus = "sending";
+      state.receivingStatus = "pending";
     });
 
     builder.addCase(fetchChatbotResponse.fulfilled, (state, action) => {
@@ -70,11 +70,11 @@ const chatSlice = createSlice({
       };
 
       state.messages = [...state.messages, newMessage];
-      state.sendingStatus = "sent";
+      state.receivingStatus = "received";
     });
 
     builder.addCase(fetchChatbotResponse.rejected, (state) => {
-      state.sendingStatus = "error";
+      state.receivingStatus = "error";
     });
   },
 });

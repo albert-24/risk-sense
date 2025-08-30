@@ -8,7 +8,7 @@ import { fetchChatbotResponse } from "../../../redux/thunks/chatThunks";
 export default function ChatPanel() {
   // const { addMessage, isLoading, setIsLoading } = useChat();
   const dispatch = useAppDispatch();
-  const sendingStatus = useAppSelector((state) => state.chat.sendingStatus);
+  const receivingStatus = useAppSelector((state) => state.chat.receivingStatus);
 
   async function handleSend(message: string) {
     if (!message.trim()) return;
@@ -23,7 +23,10 @@ export default function ChatPanel() {
         <ChatConversation />
       </div>
       <div className="w-full grow-0 py-4">
-        <ChatInput onSend={handleSend} isLoading={sendingStatus == "sending"} />
+        <ChatInput
+          onSend={handleSend}
+          isLoading={receivingStatus == "pending"}
+        />
       </div>
     </>
   );
