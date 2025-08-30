@@ -1,4 +1,11 @@
-import Map, { Layer, Popup, Source } from "react-map-gl/mapbox";
+import Map, {
+  GeolocateControl,
+  Layer,
+  NavigationControl,
+  Popup,
+  ScaleControl,
+  Source,
+} from "react-map-gl/mapbox";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef, useState } from "react";
@@ -84,7 +91,10 @@ export default function MapView() {
           coordinates[0] as [number, number]
         )
       );
-      mapRef.current.fitBounds(bounds, { padding: 96, duration: 800 });
+      mapRef.current.fitBounds(bounds, {
+        padding: { top: 96, bottom: 96, left: 96 + 16 + 384 + 16, right: 96 },
+        duration: 800,
+      });
     }
   }, [geoJsonDataSources.length]);
 
@@ -102,14 +112,20 @@ export default function MapView() {
       {...viewport}
       ref={mapRef}
       mapboxAccessToken={MAPBOX_TOKEN}
-      onMove={(evt) => setViewport(evt.viewState)}
       mapStyle={MAPBOX_STYLE_URL}
+      minZoom={4}
+      maxZoom={18}
+      projection={"mercator"}
+      onMove={(evt) => setViewport(evt.viewState)}
       interactiveLayerIds={interactiveLayerIds}
       style={{ width: "100vw", height: "100vh" }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       logoPosition="bottom-right"
     >
+      <NavigationControl position="top-right" />
+      {/* <GeolocateControl position="top-right" /> */}
+      <ScaleControl position="bottom-right" />
       {/* Raster Layer Example */}
       {/* <Source
           id="radar-raster"
