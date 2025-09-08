@@ -19,10 +19,7 @@ export default function ChatInput({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      aria-label="Chat input"
-    >
+    <form onSubmit={handleSubmit} aria-label="Chat input">
       <div
         className={`mx-4 flex items-center gap-2 bg-white rounded-lg shadow-lg border border-gray-200  ${
           isLoading ? "animate-pulse" : ""
