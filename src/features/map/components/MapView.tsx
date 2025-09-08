@@ -1,5 +1,5 @@
 import Map, {
-  GeolocateControl,
+  // GeolocateControl,
   Layer,
   NavigationControl,
   Popup,

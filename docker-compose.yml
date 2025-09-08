@@ -1,0 +1,23 @@
+services:
+  # Development environment
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    ports:
+      - "3002:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    
+  # Staging environment
+  staging:
+    build:
+      context: .
+      dockerfile: Dockerfile-staging
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=staging
