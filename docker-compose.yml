@@ -3,7 +3,8 @@ services:
   dev:
     build:
       context: .
-      dockerfile: Dockerfile-dev
+      dockerfile: docker/dev/Dockerfile
+    container_name: gates-gis-chat-app-dev
     ports:
       - "3002:5173"
     volumes:
@@ -16,7 +17,8 @@ services:
   staging:
     build:
       context: .
-      dockerfile: Dockerfile-staging
+      dockerfile: docker/staging/Dockerfile
+    container_name: gates-gis-chat-app-staging
     ports:
       - "80:80"
     environment:

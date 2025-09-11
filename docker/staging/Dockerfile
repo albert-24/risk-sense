@@ -16,7 +16,7 @@ COPY . .
 
 # Build the application
 ENV NODE_ENV=staging
-RUN pnpm build
+RUN pnpm build:staging
 
 # Staging server stage
 FROM nginx:alpine
@@ -25,7 +25,7 @@ FROM nginx:alpine
 COPY --from=node-builder /app/dist /usr/share/nginx/html
 
 # Copy nginx config
-COPY nginx-staging.conf /etc/nginx/conf.d/default.conf
+COPY docker/staging/nginx-default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
