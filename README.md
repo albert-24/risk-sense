@@ -11,7 +11,7 @@
 ## Table of Contents
 
 - [Main Features](#main-features)
-- [Run Locally](#run-locally)
+- [Getting Started](#getting-started)
 - [Deployment](#deployment)
 
 <a name="main-features"></a>
@@ -35,7 +35,13 @@
 
 ## Getting Started
 
-### Environment Setup
+### Clone the Repository
+```bash
+git clone git@gitlab.com:albert.asti/gates-gis-chat-app.git
+```
+> Your ssh public key in `/.ssh` folder is required
+
+### Set Up Environment
 
 #### Creating `.env` File <a id="env-setup"></a>
 
@@ -74,57 +80,49 @@ VITE_MAPBOX_ACCESS_TOKEN=mamamotoken    # Mapbox access token
 
 ### Run Locally
 
-You can run this project either using Docker (recommended) or manual setup.
+You can run this project either using Docker or manual setup.
 
 #### Docker Setup *`(Recommended)`*
 
 1. Install Docker:
     - [Docker CLI for Mac](https://dev.to/dutchskull/setting-up-dynamic-environment-variables-with-vite-and-docker-5cmj)
 
-
-2. Clone the repository:
-    ```bash
-    git clone git@gitlab.com:albert.asti/gates-gis-chat-app.git
-    cd gates-gis-chat-app
-    ```
-
-3. Start the development server:
+2. From your project's root folder, start the development server:
 - in development mode
     ```bash
     docker compose up dev
     ```
-- with detached mode
+- or with detached mode
     ```bash
     docker compose up -d dev
     ```
-
-4. Open [http://localhost:3002](http://localhost:3002) in your browser
+3. Open [http://localhost:3002](http://localhost:3002) in your browser
 
 ##### Docker Commands
-Start development environment
-```bash
-docker compose up
-```
+- Start development environment
+    ```bash
+    docker compose up
+    ```
 
-Stop containers
-```bash
-docker compose down
-```
+- Stop containers
+    ```bash
+    docker compose down
+    ```
 
-View logs
-```bash
-docker compose logs -f
-```
+- View logs
+    ```bash
+    docker compose logs -f
+    ```
 
-Rebuild container (if dependencies change)
-```bash
-docker compose build --no-cache
-```
+- Rebuild container (if dependencies change)
+    ```bash
+    docker compose build --no-cache
+    ```
 
-Clear docker caches
-```bash
-docker system df
-```
+- Clear docker caches
+    ```bash
+    docker system df
+    ```
 
 
 #### Manual Local ~~Hell~~ Setup
@@ -142,11 +140,7 @@ docker system df
     npm install -g pnpm@latest-10
     ```
 
-2. Clone the repository:
-    ```bash
-    git clone git@gitlab.com:albert.asti/gates-gis-chat-app.git
-    cd gates-gis-chat-app
-    ```
+2. Go to your project's root folder.
 
 3. Install dependencies:
     ```bash
@@ -171,26 +165,35 @@ docker system df
     ```
 
 ##### Available Scripts
+- Development server (default port 5173)
+    ```bash
+    pnpm dev
+    ```
 
-```bash
-# Development server (default port 5173)
-pnpm dev
+- Development server (custom port)
+    ```bash
+    pnpm dev --port 3002
+    ```
 
-# Development server (custom port)
-pnpm dev --port 3002
+- Type checking
+    ```bash
+    pnpm type-check
+    ```
 
-# Type checking
-pnpm type-check
+- Run tests
+    ```bash
+    pnpm test
+    ```
 
-# Run tests
-pnpm test
+- Build for production
+    ```bash
+    pnpm build
+    ```
 
-# Build for production
-pnpm build
-
-# Preview production build
-pnpm preview
-```
+- Preview production build
+    ```bash
+    pnpm preview
+    ```
 
 ##### Troubleshooting
 
