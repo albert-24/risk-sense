@@ -1,4 +1,20 @@
-# GATES GIS Chat App
+# **GATES GIS Chat App**
+
+<p>
+  <img src="https://img.shields.io/badge/docker-latest-blue.svg" />
+  <img src="https://img.shields.io/badge/npm-22.x-cc3534.svg" />
+  <img src="https://img.shields.io/badge/pnpm-10.x-f9ad00.svg" />
+</p>
+
+<a name="contents"></a>
+
+## Table of Contents
+
+- [Main Features](#main-features)
+- [Run Locally](#run-locally)
+- [Deployment](#deployment)
+
+<a name="main-features"></a>
 
 ## Main Features
 
@@ -15,15 +31,19 @@
   - Intelligent query analysis by GATES AI
   - Automatic redirection to GATES Admin Dashboard when relevant
 
-## Environment Setup
+<a name="getting-started"></a>
 
-### Creating `.env` File <a id="env-setup"></a>
+## Getting Started
+
+### Environment Setup
+
+#### Creating `.env` File <a id="env-setup"></a>
 
 The `.env` file should be created in the project root directory:
 ```
 gates-gis-chat-app/
-├── src/
 ├── public/
+├── src/
 ├── .env  👈 Create here
 ├── package.json
 └── ...
@@ -46,25 +66,21 @@ Choose one of these methods to create your `.env` file:
 Add these variables to your `.env` file:
 
 ```ini
-# API Keys
-VITE_GEMINI_API_KEY=chatgptparin   # Google Gemini API key
-VITE_MAPBOX_ACCESS_TOKEN=mamamotoken   # Mapbox access token
+VITE_GEMINI_API_KEY=chatgptparin        # Google Gemini API key
+VITE_MAPBOX_ACCESS_TOKEN=mamamotoken    # Mapbox access token
 ```
 
-> **Important**: Contact the development team to get the API keys and other required values
+> **Note**: Contact the development team to get the API keys and other required values
 
-## Getting Started
+### Run Locally
 
 You can run this project either using Docker (recommended) or manual setup.
 
-### 🐳 Docker Setup (Recommended)
+#### Docker Setup *`(Recommended)`*
 
-1. Install Docker Desktop for Mac:
-    ```bash
-    # Using Homebrew
-    brew install --cask docker
-    ```
-    Or download from [Docker Hub](https://docs.docker.com/desktop/install/mac-install/)
+1. Install Docker:
+    - [Docker CLI for Mac](https://dev.to/dutchskull/setting-up-dynamic-environment-variables-with-vite-and-docker-5cmj)
+
 
 2. Clone the repository:
     ```bash
@@ -73,41 +89,53 @@ You can run this project either using Docker (recommended) or manual setup.
     ```
 
 3. Start the development server:
+- in development mode
     ```bash
-    # Start in development mode
     docker compose up dev
-
-    # Or with detached mode
+    ```
+- with detached mode
+    ```bash
     docker compose up -d dev
     ```
 
 4. Open [http://localhost:3002](http://localhost:3002) in your browser
 
-### 🐳 Docker Commands
-
+##### Docker Commands
+Start development environment
 ```bash
-# Start development environment
-docker compose up dev
-
-# Stop containers
-docker compose down
-
-# View logs
-docker compose logs -f dev
-
-# Rebuild container (if dependencies change)
-docker compose build --no-cache dev
+docker compose up
 ```
 
-### Manual Local ~~Hell~~ Setup
+Stop containers
+```bash
+docker compose down
+```
 
-#### Prerequisites
+View logs
+```bash
+docker compose logs -f
+```
+
+Rebuild container (if dependencies change)
+```bash
+docker compose build --no-cache
+```
+
+Clear docker caches
+```bash
+docker system df
+```
+
+
+#### Manual Local ~~Hell~~ Setup
+
+##### Prerequisites
 
 - Node.js >= 20.x
 - pnpm >= 10.x
 - macOS, Windows, or Linux
 
-#### Instructions
+##### Instructions
 
 1. Install `pnpm` if you haven't:
     ```bash
@@ -142,7 +170,7 @@ docker compose build --no-cache dev
     VITE_PORT=3002
     ```
 
-### Available Scripts
+##### Available Scripts
 
 ```bash
 # Development server (default port 5173)
@@ -164,7 +192,7 @@ pnpm build
 pnpm preview
 ```
 
-### Troubleshooting
+##### Troubleshooting
 
 If you encounter any issues:
 
@@ -183,3 +211,8 @@ If you encounter any issues:
     ```bash
     node --version
     ```
+
+<a name="deployment"></a>
+
+## Deployment
+Coming soon...
