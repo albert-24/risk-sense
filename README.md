@@ -99,14 +99,9 @@ You can run this project either using Docker or manual setup.
 3. Open [http://localhost:3002](http://localhost:3002) in your browser
 
 ##### Docker Commands
-- Start development environment
-    ```bash
-    docker compose up
-    ```
-
 - Stop containers
     ```bash
-    docker compose down
+    docker compose down dev
     ```
 
 - View logs
