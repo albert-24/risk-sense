@@ -11,7 +11,7 @@
 ## Table of Contents
 
 - [Main Features](#main-features)
-- [Getting Started](#getting-started)
+- [Getting Started (Development)](#getting-started)
 - [Deployment](#deployment)
 
 <a name="main-features"></a>
@@ -33,7 +33,7 @@
 
 <a name="getting-started"></a>
 
-## Getting Started
+## Getting Started (Development)
 
 ### Clone the Repository
 ```bash
@@ -41,9 +41,15 @@ git clone git@gitlab.com:albert.asti/gates-gis-chat-app.git
 ```
 > Your ssh public key in `/.ssh` folder is required
 
-### Set Up Environment
+### Set Up Dev Environment
 
-#### Creating `.env` File <a id="env-setup"></a>
+#### Using VS Code
+1. Open VS Code.
+2. Click **File** > **Open Folder...** (or use `Cmd+O` / `Ctrl+O`).
+3. Select the `gates-gis-chat-app` project folder and click **Open**.
+4. (Optional) If prompted, install recommended extensions for best development experience.
+
+#### Creating `.env` File
 
 The `.env` file should be created in the project root directory:
 ```
@@ -55,7 +61,7 @@ gates-gis-chat-app/
 └── ...
 ```
 
-Choose one of these methods to create your `.env` file:
+Choose one of these methods to create the `.env` file:
 
 1. **Using Terminal**:
     ```bash
@@ -69,7 +75,7 @@ Choose one of these methods to create your `.env` file:
 
 #### Required Environment Variables
 
-Add these variables to your `.env` file:
+Add these variables to the `.env` file:
 
 ```ini
 VITE_GEMINI_API_KEY=chatgptparin        # Google Gemini API key
@@ -87,7 +93,7 @@ You can run this project either using Docker or manual setup.
 1. Install Docker:
     - [Docker CLI for Mac](https://dev.to/dutchskull/setting-up-dynamic-environment-variables-with-vite-and-docker-5cmj)
 
-2. From your project's root folder, start the development server:
+2. From the project's root folder, start the development server:
 - in development mode
     ```bash
     docker compose up dev
@@ -96,7 +102,7 @@ You can run this project either using Docker or manual setup.
     ```bash
     docker compose up -d dev
     ```
-3. Open [http://localhost:3002](http://localhost:3002) in your browser
+3. Open [http://localhost:3002](http://localhost:3002) in the browser
 
 ##### Docker Commands
 - Stop containers
@@ -135,7 +141,7 @@ You can run this project either using Docker or manual setup.
     npm install -g pnpm@latest-10
     ```
 
-2. Go to your project's root folder.
+2. Go to the project's root folder.
 
 3. Install dependencies:
     ```bash
@@ -151,9 +157,9 @@ You can run this project either using Docker or manual setup.
     pnpm dev --port 3002
     ```
 
-5. Open [http://localhost:3002](http://localhost:3002) in your browser
+5. Open [http://localhost:3002](http://localhost:3002) in the browser
 
-    > **Note**: The default port is 5173, but you can change it using the `--port` flag or by setting `VITE_PORT` in your `.env` file:
+    > **Note**: The default port is 5173, but you can change it using the `--port` flag or by setting `VITE_PORT` in the `.env` file:
     ```bash
     # in .env file
     VITE_PORT=3002
