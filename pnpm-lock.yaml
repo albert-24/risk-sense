@@ -50,6 +50,9 @@ importers:
       mapbox-gl:
         specifier: ^3.12.0
         version: 3.12.0
+      openai:
+        specifier: ^5.21.0
+        version: 5.21.0(ws@8.18.2)
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -2182,6 +2185,18 @@ packages:
 
   nwsapi@2.2.20:
     resolution: {integrity: sha512-/ieB+mDe4MrrKMT8z+mQL8klXydZWGR5Dowt4RAGKbJ3kIGEx3X4ljUo+6V73IXtUPWgfOlU5B9MlGxFO5T+cA==}
+
+  openai@5.21.0:
+    resolution: {integrity: sha512-E9LuV51vgvwbahPJaZu2x4V6SWMq9g3X6Bj2/wnFiNfV7lmAxYVxPxcQNZqCWbAVMaEoers9HzIxpOp6Vvgn8w==}
+    hasBin: true
+    peerDependencies:
+      ws: ^8.18.0
+      zod: ^3.23.8
+    peerDependenciesMeta:
+      ws:
+        optional: true
+      zod:
+        optional: true
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -4919,6 +4934,10 @@ snapshots:
   node-releases@2.0.19: {}
 
   nwsapi@2.2.20: {}
+
+  openai@5.21.0(ws@8.18.2):
+    optionalDependencies:
+      ws: 8.18.2
 
   optionator@0.9.4:
     dependencies:
