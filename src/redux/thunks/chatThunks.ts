@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { generateResponse } from "../../services/openAIService";
+import { generateResponse } from "../../services/geminiService";
 import { classifyChat } from "@/services/mordorService";
 
 export const fetchChatbotResponse = createAsyncThunk(
   "chat/fetchChatbotResponse",
   async (message: string) => {
-     const promises = await Promise.all([generateResponse(message), classifyChat({
+     const promises = await Promise.allSettled([generateResponse(message), classifyChat({
       query: message,
       page: "GIS WebApp"
     })]);
