@@ -16,16 +16,7 @@ type MapLayerItem = {
   visible: boolean;
 };
 
-interface MapLayerListPopoverProps {
-  //   layers: MapLayerItem[];
-  //   onToggleLayer: (id: string) => void;
-}
-
-export const MapLayerListPopover: React.FC<MapLayerListPopoverProps> = (
-  {
-    //   onToggleLayer,
-  }
-) => {
+export const MapLayerListPopover: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   const geoJsonDataSources = useAppSelector(
@@ -38,12 +29,6 @@ export const MapLayerListPopover: React.FC<MapLayerListPopoverProps> = (
     visible: true,
   }));
 
-  //   const onToggleLayer = React.useCallback(
-  //     (id: string) => {
-  //       dispatch({ type: "map/toggleLayer", payload: id });
-  //     },
-  //     [dispatch]
-  //   );
   return (
     <Popover modal={false} open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
