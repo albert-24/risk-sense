@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import {
   Popover,
   PopoverTrigger,
@@ -9,20 +9,19 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { LayersIcon } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import type { GeoJsonDataSource } from "@/redux/slices/mapSlice";
+import { mapActions, type GeoJsonDataSource } from "@/redux/slices/mapSlice";
 
 type MapLayerItem = {
   source: GeoJsonDataSource;
   visible: boolean;
 };
 
-export const MapLayerListPopover: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
+export const MapLayerListPopover = () => {
+  const [open, setOpen] = useState(false);
 
   const geoJsonDataSources = useAppSelector(
     (state) => state.map.geoJsonDataSources
   );
-  const dispatch = useAppDispatch();
 
   const layerItems: MapLayerItem[] = geoJsonDataSources.map((source) => ({
     source: source,
@@ -47,25 +46,10 @@ export const MapLayerListPopover: React.FC = () => {
         <div className="px-4 py-2 border-b">
           <span className="font-medium text-sm">Map Layers</span>
         </div>
-        <ScrollArea className="h-48">
+        <ScrollArea className="h-32">
           <div className="p-2 space-y-2">
             {layerItems.map((item) => (
-              <label
-                key={item.source.id}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <Checkbox
-                  checked={item.source.visibleToMap}
-                  onCheckedChange={() => {
-                    dispatch({
-                      type: "map/toggleLayerVisibility",
-                      payload: { id: item.source.id },
-                    });
-                  }}
-                  id={`layer-checkbox-${item.source.id}`}
-                />
-                <span className="text-sm">{item.source.layerName}</span>
-              </label>
+              <MapLayerItem key={item.source.id} {...item} />
             ))}
           </div>
         </ScrollArea>
@@ -83,5 +67,25 @@ export const MapLayerListPopover: React.FC = () => {
         </div>
       </PopoverContent>
     </Popover>
+  );
+};
+
+const MapLayerItem = (item: MapLayerItem) => {
+  const dispatch = useAppDispatch();
+
+  return (
+    <label
+      key={item.source.id}
+      className="flex items-center gap-2 cursor-pointer"
+    >
+      <Checkbox
+        checked={item.source.visibleToMap}
+        onCheckedChange={() => {
+          dispatch(mapActions.toggleLayerVisibility({ id: item.source.id }));
+        }}
+        id={`layer-checkbox-${item.source.id}`}
+      />
+      <span className="text-sm">{item.source.layerName}</span>
+    </label>
   );
 };

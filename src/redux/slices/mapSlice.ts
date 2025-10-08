@@ -50,6 +50,6 @@ const mapSlice = createSlice({
   },
 });
 
-// export const { } = mapSlice.actions;
+export const mapActions = mapSlice.actions;
 
 export default mapSlice.reducer;
