@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchChatbotResponse } from "../thunks/chatThunks";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
+import { generateRandomID } from "@/lib/utils";
 
 export interface GeoJsonDataSource {
   id: string;
@@ -35,7 +36,9 @@ const mapSlice = createSlice({
       const {aiResponse} = action.payload;
 
       if (aiResponse.status == "fulfilled" && aiResponse.value.geoJson) {
-        const sourceId = crypto.randomUUID();
+        // const sourceId = crypto.randomUUID();
+        const sourceId = generateRandomID();
+
         state.geoJsonDataSources = [
           ...state.geoJsonDataSources,
           {

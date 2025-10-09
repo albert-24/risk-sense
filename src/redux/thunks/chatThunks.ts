@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { generateResponse } from "../../services/geminiService";
+import { generateResponse } from "../../services/gatesApiService";
 import { classifyChat } from "@/services/mordorService";
 
 export const fetchChatbotResponse = createAsyncThunk(
@@ -21,14 +21,3 @@ export const fetchChatbotResponse = createAsyncThunk(
     }
   }
 );
-
-// export const classifyChatResponse = createAsyncThunk(
-//   "chat/classifyChatResponse",
-//   async (message: string) => {
-//     const response = await classifyChat({
-//       query: message,
-//       page: "GIS WebApp"
-//     });
-//     return response;
-//   }
-// );
