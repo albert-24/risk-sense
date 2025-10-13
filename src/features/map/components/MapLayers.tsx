@@ -39,6 +39,10 @@ export const MapLayers = () => {
               <Source
                 key={dataSource.id}
                 type="geojson"
+                cluster={true}
+                clusterMinPoints={2}
+                clusterRadius={8}
+                clusterMaxZoom={15}
                 data={dataSource.sourceData}
               >
                 {/* <AreaDataLayer dataSource={dataSource} /> */}
@@ -87,6 +91,34 @@ export const MapLayers = () => {
 
                 {/* <PointDataLayer dataSource={dataSource} /> */}
                 <Layer
+                  id={`point-cluster-${dataSource.id}`}
+                  type="circle"
+                  paint={{
+                    "circle-radius": 16,
+                    "circle-color": "#056696",
+                    "circle-stroke-width": 2,
+                    "circle-stroke-color": "#ffffff",
+                  }}
+                  filter={["==", "cluster", true]}
+                />
+                <Layer
+                  id={`point-cluster-symbol-${dataSource.id}`}
+                  type="symbol"
+                  layout={{
+                    "text-field": ["get", "point_count_abbreviated"],
+                    "text-font": [
+                      "Open Sans Semibold",
+                      "Arial Unicode MS Bold",
+                    ],
+                    "text-size": 14,
+                  }}
+                  paint={{
+                    "text-color": "#ffffff",
+                  }}
+                  filter={["==", "cluster", true]}
+                />
+
+                <Layer
                   source={dataSource.id}
                   id={`point-${dataSource.id}`}
                   type="circle"
@@ -97,9 +129,13 @@ export const MapLayers = () => {
                     "circle-stroke-color": "#ffffff",
                   }}
                   filter={[
-                    "any",
-                    ["==", ["geometry-type"], "Point"],
-                    ["==", ["geometry-type"], "MultiPoint"],
+                    "all",
+                    ["!=", "cluster", true],
+                    // [
+                    //   "any",
+                    //   ["==", ["geometry-type"], "Point"],
+                    //   ["==", ["geometry-type"], "MultiPoint"],
+                    // ],
                   ]}
                 />
               </Source>

@@ -29,6 +29,8 @@ export default function MapView() {
       `polygon-outline-${source.id}`,
       `line-${source.id}`,
       `point-${source.id}`,
+      `point-cluster-${source.id}`,
+      `point-cluster-symbol-${source.id}`,
     ]);
 
   const [viewport, setViewport] = useState({
@@ -49,6 +51,7 @@ export default function MapView() {
           ? feature.geometry.coordinates
           : [event.lngLat.lng, event.lngLat.lat];
 
+      console.log(feature);
       setPopupData({
         longitude: coordinates[0],
         latitude: coordinates[1],
