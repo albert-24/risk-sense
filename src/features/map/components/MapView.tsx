@@ -95,7 +95,12 @@ export default function MapView() {
       );
 
       currentMapRef.fitBounds(bounds, {
-        padding: { top: 96, bottom: 96, left: 96 + 16 + 384 + 16, right: 96 },
+        padding: {
+          top: 128,
+          bottom: 128,
+          left: 256 + 16 + 384 + 16,
+          right: 256,
+        },
         duration: 800,
       });
     }
