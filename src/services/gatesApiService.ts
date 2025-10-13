@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const gatesApiAxios = axios.create({
+export const gatesApiAxios = axios.create({
   baseURL: 'http://172.16.0.237:8181',
   timeout: 60000,
 });
@@ -26,7 +26,8 @@ export async function generateResponse(
         query: message,
         request: "GIS WebApp"
     });
-    console.log("GATES AI response:", response.data);
+
+    console.log("GATES Platform response:", response.data);
     
     return {
       text: response.data.response.parsed.parsed_text as string,
