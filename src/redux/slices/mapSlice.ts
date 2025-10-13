@@ -39,6 +39,11 @@ const mapSlice = createSlice({
         // const sourceId = crypto.randomUUID();
         const sourceId = generateRandomID();
 
+        // Set all existing layers to not visible
+        state.geoJsonDataSources.forEach(source => {
+          source.visibleToMap = false;
+        });
+        
         state.geoJsonDataSources = [
           ...state.geoJsonDataSources,
           {
