@@ -2,16 +2,16 @@ import axios from "axios";
 
 const gatesApiAxios = axios.create({
   baseURL: 'http://172.16.0.237:8181',
-  timeout: 10000,
+  timeout: 60000,
 });
 
 export type GatesAIResponse = {
-    status: String,
+    status: string,
     response: {
-      id: String,
+      id: string,
       parsed: {
-        parsed_text: String,
-        parsed_block: {
+        parsed_text: string,
+        parsed_blocks: {
           json: []
         }
       }
@@ -32,9 +32,9 @@ export async function generateResponse(
       text: response.data.response.parsed.parsed_text as string,
       geoJson: {
         type: "FeatureCollection",
-        features: response.data.response.parsed.parsed_block.json as GeoJSON.Feature[]
+        features: response.data.response.parsed.parsed_blocks.json as GeoJSON.Feature[]
       },
-      layerName: response.data.response.id.toString()
+      layerName: response.data.response.id
     };
   } catch (error) {
     console.error("Error in generateResponse (gatesApiService):", error);
