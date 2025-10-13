@@ -12,7 +12,7 @@ export const MapLayerPopup = ({
 }: {
   popupData: MapLayerPopupData;
 }) => {
-  const popupHeader = get_popup_header(popupData.feature.properties);
+  const popupHeader = getPopupHeader(popupData.feature.properties);
   const popupProperties = Object.fromEntries(
     Object.entries(popupData.feature.properties ?? {}).filter(([key]) =>
       popupHeader
@@ -59,7 +59,7 @@ export const MapLayerPopup = ({
   );
 };
 
-function get_popup_header(
+function getPopupHeader(
   featureProperties: any
 ): { key: string; value: string } | null {
   if (featureProperties["project_title"]) {
