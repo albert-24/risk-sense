@@ -41,7 +41,7 @@ export const MapLayers = () => {
                 type="geojson"
                 cluster={true}
                 clusterMinPoints={2}
-                clusterRadius={8}
+                clusterRadius={24}
                 clusterMaxZoom={15}
                 data={dataSource.sourceData}
               >
@@ -111,6 +111,7 @@ export const MapLayers = () => {
                       "Arial Unicode MS Bold",
                     ],
                     "text-size": 14,
+                    "text-allow-overlap": true,
                   }}
                   paint={{
                     "text-color": "#ffffff",

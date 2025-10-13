@@ -7,6 +7,8 @@ export type MapLayerPopupData = {
   feature: any;
 };
 
+type PopupHeaderProps = { key: string; value: string } | null;
+
 export const MapLayerPopup = ({
   popupData,
 }: {
@@ -30,38 +32,58 @@ export const MapLayerPopup = ({
       style={{ maxWidth: "480px" }}
     >
       <div className="p-3 rounded-lg text-sm bg-white/70 backdrop-blur-md">
-        {popupHeader && (
-          <div className="font-bold mb-1">{popupHeader.value}</div>
+        {"cluster" in popupProperties && popupProperties["cluster"] === true ? (
+          <span>
+            <b>
+              {new Intl.NumberFormat().format(
+                (popupProperties["point_count"] as number) ?? 0
+              )}
+            </b>{" "}
+            in this location
+          </span>
+        ) : (
+          <DefaultPopupContent
+            popupHeader={popupHeader}
+            popupProperties={popupProperties}
+          />
         )}
-
-        <table className="table-auto">
-          {Object.entries(popupProperties ?? {}).map(([key, value]) => (
-            // <div key={key} className="grid grid-cols-2 gap-2 wrap-break-word">
-            //   <span className="font-medium">{titleCase(key, {})}:</span>
-            //   <span>{String(value)}</span>
-            // </div>
-            <tbody key={key}>
-              <tr>
-                <td className="font-medium pr-2 align-top">
-                  {titleCase(key, {})}:
-                </td>
-                <td className="break-words">
-                  {typeof value === "number"
-                    ? new Intl.NumberFormat().format(value)
-                    : String(value)}
-                </td>
-              </tr>
-            </tbody>
-          ))}
-        </table>
       </div>
     </Popup>
   );
 };
 
-function getPopupHeader(
-  featureProperties: any
-): { key: string; value: string } | null {
+type DefaultPopupContentProps = {
+  popupHeader: PopupHeaderProps;
+  popupProperties: Record<string, any>;
+};
+
+const DefaultPopupContent = ({
+  popupHeader,
+  popupProperties,
+}: DefaultPopupContentProps) => (
+  <>
+    {popupHeader && <div className="font-bold mb-1">{popupHeader.value}</div>}
+
+    <table className="table-auto">
+      {Object.entries(popupProperties ?? {}).map(([key, value]) => (
+        <tbody key={key}>
+          <tr>
+            <td className="font-medium pr-2 align-top">
+              {titleCase(key, {})}:
+            </td>
+            <td className="break-words">
+              {typeof value === "number"
+                ? new Intl.NumberFormat().format(value)
+                : String(value)}
+            </td>
+          </tr>
+        </tbody>
+      ))}
+    </table>
+  </>
+);
+
+function getPopupHeader(featureProperties: any): PopupHeaderProps | null {
   if (featureProperties["project_title"]) {
     return { key: "project_title", value: featureProperties["project_title"] };
   } else if (featureProperties["title"]) {
