@@ -12,9 +12,7 @@ describe("ChatInput", () => {
         <ChatInput />
       </Provider>
     );
-    expect(
-      screen.getByPlaceholderText("Ask about the Philippine geography...")
-    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Ask GATES...")).toBeInTheDocument();
   });
 
   it("should NOT call generateResponse if input is empty", () => {
@@ -25,9 +23,7 @@ describe("ChatInput", () => {
         <ChatInput onSend={mockOnSend} />
       </Provider>
     );
-    const input = screen.getByPlaceholderText(
-      "Ask about the Philippine geography..."
-    );
+    const input = screen.getByPlaceholderText("Ask GATES...");
 
     // Simulate pressing Enter without typing anything
     input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
@@ -44,9 +40,7 @@ describe("ChatInput", () => {
         <ChatInput onSend={mockOnSend} />
       </Provider>
     );
-    const input = screen.getByPlaceholderText(
-      "Ask about the Philippine geography..."
-    );
+    const input = screen.getByPlaceholderText("Ask GATES...");
     const message = "Please show me all provincial capitals in Luzon";
 
     const user = userEvent.setup();

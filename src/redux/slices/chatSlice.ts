@@ -1,9 +1,11 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { fetchChatbotResponse } from "../thunks/chatThunks";
 import type { ChatClassifierResponse } from "@/services/mordorService";
+import { generateRandomID } from "@/lib/utils";
 
 export interface Message {
   id: string;
+  status: "rejected" | "fulfilled";
   content: string;
   role: "user" | "assistant";
   timestamp: string;
@@ -26,7 +28,9 @@ const chatSlice = createSlice({
   reducers: {
     sendToChatbot: (state, action: PayloadAction<string>) => {
       const newMessage: Message = {
-        id: crypto.randomUUID(),
+        // id: crypto.randomUUID(),
+        id: generateRandomID(),
+        status: "fulfilled",
         content: action.payload,
         role: "user",
         timestamp: new Date().toISOString(),
@@ -68,7 +72,9 @@ const chatSlice = createSlice({
       const { aiResponse, classificationResponse } = action.payload;
 
       const newMessage: Message = {
-        id: crypto.randomUUID(),
+        // id: crypto.randomUUID(),
+        id: Math.random().toString(32),
+        status: aiResponse.status,
         content: aiResponse.status == "rejected" ? "Cannot generate response. Please try again later." : formatToMarkdown(aiResponse.value.text, classificationResponse),
         role: "assistant",
         timestamp: new Date().toISOString(),
