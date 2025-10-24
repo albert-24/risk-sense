@@ -56,4 +56,94 @@ describe("ChatInput", () => {
     expect(mockOnSend).toHaveBeenCalledWith(message);
     expect(mockOnSend).toHaveBeenCalledTimes(1);
   });
+
+  it("should clear the input box after sending a message", async () => {
+  const mockOnSend = vi.fn();
+
+  render(
+    <Provider store={store}>
+      <ChatInput onSend={mockOnSend} />
+    </Provider>
+  );
+
+  const input = screen.getByPlaceholderText(
+    "Ask about the Philippine geography..."
+  );
+  const message = "Show me all cities in Mindanao";
+
+  const user = userEvent.setup();
+
+  // Type a message
+  await user.type(input, message);
+  // Press Enter
+  await user.keyboard("{Enter}");
+
+  // Check that the message was sent
+  expect(mockOnSend).toHaveBeenCalledWith(message);
+
+  // Check that the input is now empty
+  expect(input).toHaveValue("");
+
+  });
+
+  it("should NOT call generateResponse if input contains only spaces", async () => {
+  const mockOnSend = vi.fn();
+
+  render(
+    <Provider store={store}>
+      <ChatInput onSend={mockOnSend} />
+    </Provider>
+  );
+
+  const input = screen.getByPlaceholderText(
+    "Ask about the Philippine geography..."
+  );
+  const user = userEvent.setup();
+
+  // Type only spaces
+  await user.type(input, "     ");
+  // Press Enter
+  await user.keyboard("{Enter}");
+
+  // Expect that the send function was NOT called
+  expect(mockOnSend).not.toHaveBeenCalled();
+  });
+
+  it("should trim extra spaces before sending a message", async () => {
+  const mockOnSend = vi.fn();
+
+  render(
+    <Provider store={store}>
+      <ChatInput onSend={mockOnSend} />
+    </Provider>
+  );
+
+  const input = screen.getByPlaceholderText(
+    "Ask about the Philippine geography..."
+  );
+  const user = userEvent.setup();
+
+  // Type a message with spaces before and after
+  await user.type(input, "   Hello Mindanao   ");
+  await user.keyboard("{Enter}");
+
+  // Expect that it sends the trimmed version only
+  expect(mockOnSend).toHaveBeenCalledWith("Hello Mindanao");
+
+  // Confirm it only sent once
+  expect(mockOnSend).toHaveBeenCalledTimes(1);
+  })
+
+  it("should disable the input field while waiting for a response", () => {
+  render(
+    <Provider store={store}>
+      <ChatInput isLoading={true} />
+    </Provider>
+  );
+
+  const input = screen.getByPlaceholderText("Exploring...");
+
+  // Expect the input to be disabled
+  expect(input).toBeDisabled();
+});
 });
