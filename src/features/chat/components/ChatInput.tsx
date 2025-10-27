@@ -15,7 +15,11 @@ export default function ChatInput({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await onSend?.(input);
+    const trimmed = input.trim();
+    if (!trimmed) return;
+
+    await onSend?.(trimmed);
+    setInput("");
   };
 
   return (

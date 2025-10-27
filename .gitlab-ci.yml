@@ -11,19 +11,19 @@ include:
   - template: Security/Secret-Detection.gitlab-ci.yml
 
 stages:
-  - sast-test
-  - app-test
+  - sast
+  - unit-test
   - secret-detection
 
 variables:
   SECRET_DETECTION_ENABLED: "true"
 
 sast:
-  stage: sast-test
+  stage: sast
 
-app-test:
+unit-test:
   image: node:latest
-  stage: app-test
+  stage: unit-test
   cache:
     paths:
       - .pnpm-store
