@@ -12,7 +12,7 @@ include:
 
 stages:
   - sast
-  - test
+  - unit-test
   - secret-detection
 
 variables:
@@ -21,9 +21,9 @@ variables:
 sast:
   stage: sast
 
-test:
+unit-test:
   image: node:latest
-  stage: test
+  stage: unit-test
   cache:
     paths:
       - .pnpm-store
