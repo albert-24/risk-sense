@@ -45,37 +45,15 @@ const chatSlice = createSlice({
     });
 
     builder.addCase(fetchChatbotResponse.fulfilled, (state, action) => {
-      function formatToMarkdown(aiResponseText: string, classificationResponse: PromiseSettledResult<ChatClassifierResponse>): string {
-        var redirectionUrl = null;
-        if (classificationResponse.status == "rejected") {
-          return aiResponseText;
-        }
-
-        const classificationValue = classificationResponse.value;
-
-        try {
-          redirectionUrl = new URL(classificationValue.url)
-        } catch {}
-
-        console.log("Redirection URL:", redirectionUrl);
-        
-        var redirectionName = 'this website';
-        if (classificationValue.target == "analytics") {
-          redirectionName = 'GATES Analytics Dashboard';
-        } else {
-          redirectionName = `${classificationValue.target} website`;
-        }
-        const redirectionMessage = redirectionUrl ? `<br /><br />For more detailed information, please visit the <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="${redirectionUrl.href}" target="_blank">${redirectionName}</a>` : '';
-        return `${aiResponseText}${redirectionMessage}`;
-      }
-      
       const { aiResponse, classificationResponse } = action.payload;
 
       const newMessage: Message = {
         // id: crypto.randomUUID(),
         id: Math.random().toString(32),
         status: aiResponse.status,
-        content: aiResponse.status == "rejected" ? "Cannot generate response. Please try again later." : formatToMarkdown(aiResponse.value.text, classificationResponse),
+        content: aiResponse.status == "rejected" ?
+          "Cannot generate response. Please try again later." : 
+          formatToMarkdown(aiResponse.value.text, classificationResponse),
         role: "assistant",
         timestamp: new Date().toISOString(),
         geoJson: aiResponse.status == "rejected" ? undefined : aiResponse.value.geoJson,
@@ -90,6 +68,33 @@ const chatSlice = createSlice({
     });
   },
 });
+
+function formatToMarkdown(
+  aiResponseText: string,
+  classificationResponse: PromiseSettledResult<ChatClassifierResponse>
+): string {
+  var redirectionUrl = null;
+  if (classificationResponse.status == "rejected") {
+    return aiResponseText;
+  }
+
+  const classificationValue = classificationResponse.value;
+
+  try {
+    redirectionUrl = new URL(classificationValue.url)
+  } catch {}
+
+  console.log("Redirection URL:", redirectionUrl);
+  
+  var redirectionName = 'this website';
+  if (classificationValue.target == "analytics") {
+    redirectionName = 'GATES Analytics Dashboard';
+  } else {
+    redirectionName = `${classificationValue.target} website`;
+  }
+  const redirectionMessage = redirectionUrl ? `<br /><br />For more detailed information, please visit the <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="${redirectionUrl.href}" target="_blank">${redirectionName}</a>` : '';
+  return `${aiResponseText}${redirectionMessage}`;
+}
 
 export const { sendToChatbot } = chatSlice.actions;
 
