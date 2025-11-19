@@ -1,5 +1,5 @@
 import { User, Bot } from "lucide-react";
-import type { Message } from "../../../redux/slices/chatSlice";
+import type { Message } from "@/redux/slices/chatSlice";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 // import rehypeSanitize from "rehype-sanitize";

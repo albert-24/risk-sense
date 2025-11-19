@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { generateResponse } from "../../services/gatesColloquiumApiService";
+import { generateResponse } from "@/services/gatesColloquiumApiService";
 import { classifyChat } from "@/services/mordorService";
 
 export const fetchChatbotResponse = createAsyncThunk(

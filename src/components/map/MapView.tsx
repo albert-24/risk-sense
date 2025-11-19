@@ -8,7 +8,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef, useState } from "react";
 import type { Feature, FeatureCollection } from "geojson";
 import type { MapMouseEvent, MapRef } from "react-map-gl/mapbox";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppSelector } from "@/redux/hooks";
 import { MapLayers } from "./MapLayers";
 import { MapLayerPopup, type MapLayerPopupData } from "./MapLayerPopup";
 

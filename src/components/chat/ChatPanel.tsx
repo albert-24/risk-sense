@@ -1,9 +1,8 @@
-// import { useChat } from "../hooks/useChat";
 import ChatConversation from "./ChatConversation";
 import ChatInput from "./ChatInput";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { sendToChatbot } from "../../../redux/slices/chatSlice";
-import { fetchChatbotResponse } from "../../../redux/thunks/chatThunks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { sendToChatbot } from "@/redux/slices/chatSlice";
+import { fetchChatbotResponse } from "@/redux/thunks/chatThunks";
 
 export default function ChatPanel() {
   // const { addMessage, isLoading, setIsLoading } = useChat();

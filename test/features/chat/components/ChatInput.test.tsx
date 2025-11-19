@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import ChatInput from "../../../../src/components/chat/components/ChatInput";
+import ChatInput from "@/components/chat/ChatInput";
 import { describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { store } from "../../../../src/redux/store";
+import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 
 describe("ChatInput", () => {
