@@ -2,9 +2,9 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 
-import ChatPanel from "./features/chat/components/ChatPanel";
-import { MapLayerListPopover } from "./features/map/components/MapLayerListPopover";
-import MapView from "./features/map/components/MapView";
+import ChatPanel from "@/components/chat/ChatPanel";
+import { MapLayerListPopover } from "@/components/map/MapLayerListPopover";
+import MapView from "@/components/map/MapView";
 
 function App() {
   return (

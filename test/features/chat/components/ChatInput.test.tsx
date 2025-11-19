@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ChatInput from "../../../../src/features/chat/components/ChatInput";
+import ChatInput from "../../../../src/components/chat/components/ChatInput";
 import { describe, expect, it, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { store } from "../../../../src/redux/store";

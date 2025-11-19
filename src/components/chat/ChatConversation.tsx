@@ -1,7 +1,7 @@
 // import { motion } from "framer-motion";
 // import { useChat } from "../hooks/useChat";
 import MessageItem from "./MessageItem";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppSelector } from "@/redux/hooks";
 // import { useSelector } from "../../redux/chatSlice";
 
 export default function ChatConversation() {
