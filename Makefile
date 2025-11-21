@@ -17,6 +17,12 @@ scl: # show available screen
 	screen -ls
 rcc: # connect to gatesclient screen
 	screen -r gateschat
-
 scgc:
 	screen -S gateschat
+
+major:	
+	$(MAKE) major
+minor:
+	$(MAKE) minor
+patch:
+	$(MAKE) patch
