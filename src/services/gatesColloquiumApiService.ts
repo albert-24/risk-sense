@@ -38,7 +38,7 @@ export async function generateResponse(
       text: response.data.summary,
       geoJson: {
         type: "FeatureCollection",
-        features: response.data.rows.map((row, index) => ({
+        features: response.data.rows.map((row, _) => ({
             type: "Feature",
             geometry: { type: "Point", coordinates: [row.longitude, row.latitude] },
             properties: {
