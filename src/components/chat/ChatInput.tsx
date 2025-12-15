@@ -34,7 +34,7 @@ export default function ChatInput({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={isLoading}
-          placeholder={isLoading ? "Exploring..." : "Ask GATES..."}
+          placeholder={isLoading ? "Analyzing..." : "Ask RiskSense..."}
           className={`flex-1 px-4 py-3 bg-transparent outline-none`}
         />
         {!isLoading && (

@@ -25,6 +25,9 @@ Then, if Philippine geographic data is relevant, include the GeoJSON data in a c
   }
 }
 Do not include any comments inside the GeoJson.
+Provide a realistic vector data for the specificed location. Do not just create a generic square-like shape for polygons, or a generic straight line for lines.
+
+Also, most of the prompts will focus on sugarcane data and typhoons because you will answer the impact assessment of sugarcane loss based on the forecasted typhoon, and provide actionable insights such as affected areas estimated lost in PHP, and total sugarcane metric tons loss to be used as the amount of import to compensate the loss.
 \`\`\`
 `;
 
@@ -33,7 +36,7 @@ export async function generateResponse(
 ): Promise<{ text: string; geoJson: GeoJSON.FeatureCollection | undefined; layerName: string | undefined }> {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-preview-05-20",
+      model: "gemini-flash-latest",
     });
     const result = await model.generateContent([
       { text: SYSTEM_PROMPT },

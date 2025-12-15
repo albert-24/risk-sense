@@ -39,10 +39,10 @@ export const MapLayers = () => {
               <Source
                 key={dataSource.id}
                 type="geojson"
-                cluster={true}
-                clusterMinPoints={2}
-                clusterRadius={24}
-                clusterMaxZoom={15}
+                // cluster={true}
+                // clusterMinPoints={2}
+                // clusterRadius={24}
+                // clusterMaxZoom={15}
                 data={dataSource.sourceData}
               >
                 {/* <AreaDataLayer dataSource={dataSource} /> */}
@@ -50,7 +50,7 @@ export const MapLayers = () => {
                   id={`polygon-fill-${dataSource.id}`}
                   type="fill"
                   paint={{
-                    "fill-color": "#3B82F6",
+                    "fill-color": "#f63b60",
                     "fill-opacity": 0.5,
                   }}
                   filter={[
@@ -63,7 +63,7 @@ export const MapLayers = () => {
                   id={`polygon-outline-${dataSource.id}`}
                   type="line"
                   paint={{
-                    "line-color": "#2563EB",
+                    "line-color": "#eb2525",
                     "line-width": 2,
                   }}
                   filter={[
@@ -90,7 +90,7 @@ export const MapLayers = () => {
                 />
 
                 {/* <PointDataLayer dataSource={dataSource} /> */}
-                <Layer
+                {/* <Layer
                   id={`point-cluster-${dataSource.id}`}
                   type="circle"
                   paint={{
@@ -117,9 +117,9 @@ export const MapLayers = () => {
                     "text-color": "#ffffff",
                   }}
                   filter={["==", "cluster", true]}
-                />
+                /> */}
 
-                <Layer
+                {/* <Layer
                   source={dataSource.id}
                   id={`point-${dataSource.id}`}
                   type="circle"
@@ -138,7 +138,7 @@ export const MapLayers = () => {
                     //   ["==", ["geometry-type"], "MultiPoint"],
                     // ],
                   ]}
-                />
+                /> */}
               </Source>
             )
         )}
