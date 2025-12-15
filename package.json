@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.14.0",
+    "jspdf": "^3.0.4",
     "lucide-react": "^0.511.0",
     "mapbox-gl": "^3.12.0",
     "openai": "^5.21.0",
